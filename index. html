@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Медина & Данил | Wedding Invitation</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#fffaf7;
+    color:#49383a;
+    font-family:"Montserrat",sans-serif;
+    overflow-x:hidden;
+}
+
+/* =========================
+   ENVELOPE
+========================= */
+
+.envelope-screen{
+    min-height:100vh;
+    min-height:100svh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+
+    background:
+    radial-gradient(circle at 20% 20%,rgba(239,196,205,.55),transparent 30%),
+    radial-gradient(circle at 80% 80%,rgba(240,207,212,.55),transparent 30%),
+    #fffaf7;
+
+    transition:opacity 1s ease;
+}
+
+.envelope-screen.hide{
+    opacity:0;
+    pointer-events:none;
+}
+
+.envelope-wrapper{
+    position:relative;
+    z-index:5;
+    text-align:center;
+    padding:30px;
+}
+
+.invitation-label{
+    color:#b96e7e;
+    font-size:11px;
+    letter-spacing:4px;
+    margin-bottom:28px;
+}
+
+.envelope{
+    width:min(330px,78vw);
+    height:220px;
+    position:relative;
+    cursor:pointer;
+    perspective:1000px;
+    filter:drop-shadow(0 20px 30px rgba(130,82,90,.18));
+    transition:transform .3s ease;
+}
+
+.envelope:hover{
+    transform:translateY(-5px);
+}
+
+.envelope-back{
+    position:absolute;
+    inset:0;
+    background:#e9bbc4;
+    border-radius:5px;
+    z-index:1;
+}
+
+.envelope-paper{
+    position:absolute;
+    width:82%;
+    height:78%;
+    left:9%;
+    top:10%;
+    background:#fffdfb;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:transform .8s ease;
+}
+
+.paper-content{
+    font-family:"Cormorant Garamond",serif;
+    color:#b96e7e;
+    font-size:32px;
+}
+
+.paper-content .heart{
+    margin:0 7px;
+    font-size:22px;
+}
+
+.envelope-front{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:60%;
+    background:#efc5cd;
+
+    clip-path:polygon(
+        0 0,
+        50% 65%,
+        100% 0,
+        100% 100%,
+        0 100%
+    );
+
+    z-index:4;
+}
+
+.envelope-flap{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:58%;
+
+    background:#f1cbd1;
+
+    clip-path:polygon(
+        0 0,
+        100% 0,
+        50% 100%
+    );
+
+    transform-origin:top;
+    transition:transform .8s cubic-bezier(.4,0,.2,1);
+
+    z-index:5;
+}
+
+.wax-seal{
+    position:absolute;
+    left:50%;
+    top:51%;
+    transform:translate(-50%,-50%);
+
+    width:58px;
+    height:58px;
+    border-radius:50%;
+
+    background:#b97887;
+    color:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-family:"Cormorant Garamond",serif;
+    font-size:13px;
+
+    box-shadow:0 5px 15px rgba(120,65,75,.25);
+
+    z-index:7;
+
+    transition:opacity .35s ease,transform .8s ease;
+}
+
+.envelope-screen.opening .envelope-flap{
+    transform:rotateX(180deg);
+}
+
+.envelope-screen.opening .wax-seal{
+    opacity:0;
+    transform:translate(-50%,-50%) scale(.4);
+}
+
+.envelope-screen.opening .envelope-paper{
+    transform:translateY(-100px);
+}
+
+.tap-text{
+    margin-top:28px;
+    font-size:11px;
+    letter-spacing:1.5px;
+    color:#8d7274;
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+    0%,100%{opacity:.45}
+    50%{opacity:1}
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main-site{
+    display:none;
+    opacity:0;
+}
+
+.main-site.visible{
+    display:block;
+    animation:websiteAppear 1.3s ease forwards;
+}
+
+@keyframes websiteAppear{
+    to{opacity:1}
+}
+
+
+/* =========================
+   MUSIC
+========================= */
+
+.music-button{
+    position:fixed;
+    right:18px;
+    top:18px;
+
+    width:48px;
+    height:48px;
+
+    border-radius:50%;
+    border:1px solid rgba(185,110,126,.35);
+
+    background:rgba(255,255,255,.88);
+
+    color:#b96e7e;
+    font-size:21px;
+
+    cursor:pointer;
+    z-index:100;
+
+    backdrop-filter:blur(10px);
+
+    box-shadow:0 8px 20px rgba(120,70,80,.12);
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:100vh;
+    min-height:100svh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    position:relative;
+
+    padding:80px 25px;
+
+    background:
+    radial-gradient(circle at 50% 35%,#ffffff,#fffaf7);
+
+    overflow:hidden;
+}
+
+.hero::before,
+.hero::after{
+    content:"✿";
+    position:absolute;
+    font-size:150px;
+    color:rgba(218,155,168,.18);
+}
+
+.hero::before{
+    left:-55px;
+    top:50px;
+}
+
+.hero::after{
+    right:-55px;
+    bottom:40px;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.small-heading{
+    font-size:10px;
+    letter-spacing:5px;
+    color:#b96e7e;
+    margin-bottom:25px;
+}
+
+.invite-line{
+    font-size:9px;
+    letter-spacing:3px;
+    color:#947c7d;
+    margin-bottom:22px;
+}
+
+.hero h1{
+    font-family:"Cormorant Garamond",serif;
+    font-size:clamp(58px,15vw,110px);
+    line-height:.78;
+    font-weight:500;
+}
+
+.hero h1 span{
+    display:block;
+    font-size:.42em;
+    color:#d99ba8;
+    margin:15px 0;
+}
+
+.ornament{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    margin:30px auto;
+    color:#b96e7e;
+}
+
+.ornament span{
+    width:65px;
+    height:1px;
+    background:#d9aeb6;
+}
+
+.date{
+    font-family:"Cormorant Garamond",serif;
+    font-size:27px;
+    letter-spacing:6px;
+    color:#b96e7e;
+}
+
+
+/* =========================
+   TEXT
+========================= */
+
+.text-section{
+    padding:100px 25px;
+    background:#fffdfb;
+    text-align:center;
+}
+
+.section-inner{
+    max-width:650px;
+    margin:auto;
+}
+
+.tiny-flower{
+    color:#d99ba8;
+    font-size:28px;
+    margin-bottom:25px;
+}
+
+.text-section h2{
+    font-family:"Cormorant Garamond",serif;
+    font-size:clamp(31px,8vw,50px);
+    line-height:1.05;
+    font-weight:500;
+    margin-bottom:28px;
+}
+
+.main-text{
+    max-width:520px;
+    margin:0 auto 12px;
+    color:#796668;
+    line-height:1.9;
+    font-size:14px;
+}
+
+
+/* =========================
+   PHOTOS
+========================= */
+
+.photo-section{
+    padding:70px 20px;
+    background:linear-gradient(180deg,#fffdfb,#f8eeee);
+    text-align:center;
+}
+
+.photo-frame{
+    max-width:600px;
+    margin:auto;
+    padding:12px;
+    background:#fff;
+    box-shadow:0 20px 60px rgba(100,60,70,.15);
+}
+
+.photo-frame img{
+    display:block;
+    width:100%;
+    height:auto;
+    object-fit:cover;
+}
+
+.photo-caption{
+    margin-top:25px;
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+}
+
+.photo-caption span{
+    font-size:9px;
+    letter-spacing:5px;
+    color:#b96e7e;
+}
+
+.photo-caption strong{
+    font-family:"Cormorant Garamond",serif;
+    font-size:28px;
+    font-weight:500;
+}
+
+
+/* =========================
+   DATE
+========================= */
+
+.details-section{
+    padding:100px 20px;
+    background:#fffaf7;
+    text-align:center;
+}
+
+.detail-card{
+    max-width:600px;
+    margin:auto;
+    padding:65px 25px;
+    border-top:1px solid #ead0d5;
+    border-bottom:1px solid #ead0d5;
+}
+
+.detail-icon{
+    color:#d99ba8;
+    font-size:34px;
+    margin-bottom:15px;
+}
+
+.detail-label{
+    font-size:9px;
+    letter-spacing:5px;
+    color:#b96e7e;
+    margin-bottom:20px;
+}
+
+.detail-card h2{
+    font-family:"Cormorant Garamond",serif;
+    font-size:56px;
+    font-weight:500;
+}
+
+.line{
+    width:55px;
+    height:1px;
+    background:#d9aeb6;
+    margin:22px auto;
+}
+
+.time{
+    font-family:"Cormorant Garamond",serif;
+    font-size:25px;
+    color:#735d5f;
+}
+
+
+/* =========================
+   LARGE PHOTO
+========================= */
+
+.large-photo{
+    position:relative;
+    height:80vh;
+    min-height:550px;
+    overflow:hidden;
+}
+
+.large-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.image-overlay{
+    position:absolute;
+    inset:0;
+
+    background:
+    linear-gradient(
+        to top,
+        rgba(55,37,39,.55),
+        transparent 60%
+    );
+}
+
+.image-text{
+    position:absolute;
+    left:50%;
+    bottom:60px;
+    transform:translateX(-50%);
+    text-align:center;
+    color:white;
+    width:90%;
+}
+
+.image-text span{
+    display:block;
+    font-size:10px;
+    letter-spacing:6px;
+    margin-bottom:8px;
+}
+
+.image-text strong{
+    font-family:"Cormorant Garamond",serif;
+    font-size:clamp(45px,12vw,90px);
+    font-weight:500;
+}
+
+
+/* =========================
+   VENUE
+========================= */
+
+.venue-section{
+    padding:110px 25px;
+    text-align:center;
+
+    background:
+    radial-gradient(circle at center,#ffffff,#fff7f5);
+}
+
+.venue-name{
+    font-family:"Cormorant Garamond",serif;
+    font-size:clamp(42px,10vw,70px);
+    font-weight:500;
+    margin:10px 0 20px;
+}
+
+.venue-flower{
+    color:#d99ba8;
+    font-size:30px;
+    margin-bottom:20px;
+}
+
+.address{
+    color:#786365;
+    font-size:14px;
+    line-height:1.8;
+    margin-bottom:30px;
+}
+
+.map-button{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    min-height:48px;
+    padding:0 25px;
+
+    border:1px solid #d4a7af;
+    border-radius:30px;
+
+    color:#8f5e69;
+    text-decoration:none;
+
+    font-size:10px;
+    letter-spacing:2px;
+}
+
+
+/* =========================
+   GALLERY
+========================= */
+
+.gallery-section{
+    padding:100px 20px;
+    background:#fffdfb;
+}
+
+.section-heading{
+    text-align:center;
+    margin-bottom:45px;
+}
+
+.section-heading span{
+    font-size:9px;
+    letter-spacing:5px;
+    color:#b96e7e;
+}
+
+.section-heading h2{
+    margin-top:12px;
+    font-family:"Cormorant Garamond",serif;
+    font-size:42px;
+    font-weight:500;
+}
+
+.gallery{
+    max-width:900px;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.gallery-item{
+    overflow:hidden;
+    background:#eee;
+}
+
+.gallery-item img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+}
+
+.item-large{
+    grid-row:span 2;
+    min-height:560px;
+}
+
+.item-wide{
+    grid-column:span 2;
+    min-height:350px;
+}
+
+
+/* =========================
+   COUNTDOWN
+========================= */
+
+.countdown-section{
+    padding:110px 20px;
+    text-align:center;
+
+    background:
+    linear-gradient(180deg,#f8e9eb,#fff8f6);
+}
+
+.countdown-inner{
+    max-width:800px;
+    margin:auto;
+}
+
+.countdown-inner h2{
+    max-width:600px;
+    margin:20px auto 50px;
+
+    font-family:"Cormorant Garamond",serif;
+    font-size:clamp(35px,8vw,55px);
+    line-height:1.05;
+    font-weight:500;
+}
+
+.countdown{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.count-box{
+    padding:20px 8px;
+    background:rgba(255,255,255,.7);
+    border:1px solid rgba(190,135,148,.25);
+}
+
+.count-box strong{
+    display:block;
+
+    font-family:"Cormorant Garamond",serif;
+    font-size:45px;
+    font-weight:500;
+    color:#b96e7e;
+}
+
+.count-box span{
+    font-size:8px;
+    letter-spacing:2px;
+    color:#866e70;
+}
+
+
+/* =========================
+   FINAL
+========================= */
+
+.final-photo{
+    position:relative;
+    height:90vh;
+    min-height:600px;
+    overflow:hidden;
+}
+
+.final-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.final-overlay{
+    position:absolute;
+    inset:0;
+
+    background:
+    linear-gradient(
+        to top,
+        rgba(53,37,40,.68),
+        rgba(53,37,40,.05)
+    );
+}
+
+.final-content{
+    position:absolute;
+    left:50%;
+    bottom:70px;
+
+    transform:translateX(-50%);
+
+    width:90%;
+    text-align:center;
+    color:white;
+}
+
+.final-content p{
+    font-size:10px;
+    letter-spacing:5px;
+    margin-bottom:18px;
+}
+
+.final-content h2{
+    font-family:"Cormorant Garamond",serif;
+    font-size:clamp(55px,13vw,100px);
+    line-height:.9;
+    font-weight:500;
+}
+
+.final-content span{
+    display:block;
+    margin-top:25px;
+    letter-spacing:5px;
+    font-size:11px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    padding:70px 25px;
+    text-align:center;
+    background:#fffaf8;
+}
+
+.footer-flower{
+    font-size:35px;
+    color:#d99ba8;
+    margin-bottom:20px;
+}
+
+footer p{
+    max-width:400px;
+    margin:auto;
+
+    font-family:"Cormorant Garamond",serif;
+    font-size:23px;
+    line-height:1.4;
+    color:#705b5e;
+}
+
+footer strong{
+    display:block;
+    margin-top:30px;
+    color:#b96e7e;
+    letter-spacing:5px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+    .hero{
+        padding:70px 20px;
+    }
+
+    .hero h1{
+        font-size:68px;
+    }
+
+    .date{
+        font-size:22px;
+    }
+
+    .ornament span{
+        width:40px;
+    }
+
+    .text-section{
+        padding:80px 22px;
+    }
+
+    .details-section{
+        padding:80px 20px;
+    }
+
+    .detail-card h2{
+        font-size:48px;
+    }
+
+    .large-photo{
+        height:70vh;
+        min-height:500px;
+    }
+
+    .gallery{
+        grid-template-columns:1fr;
+    }
+
+    .item-large{
+        grid-row:auto;
+        min-height:auto;
+    }
+
+    .item-wide{
+        grid-column:auto;
+        min-height:auto;
+    }
+
+    .countdown{
+        grid-template-columns:repeat(2,1fr);
+        gap:8px;
+    }
+
+    .count-box strong{
+        font-size:38px;
+    }
+
+    .final-photo{
+        height:75vh;
+        min-height:500px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     ENVELOPE
+========================================= -->
+
+<section id="envelopeScreen" class="envelope-screen">
+
+    <div class="envelope-wrapper">
+
+        <div class="invitation-label">
+            СИЗГЕ ЧАКЫРУУ БАР
+        </div>
+
+        <div class="envelope" id="openEnvelope">
+
+            <div class="envelope-back"></div>
+
+            <div class="envelope-paper">
+
+                <div class="paper-content">
+                    <span>М</span>
+                    <span class="heart">♡</span>
+                    <span>Д</span>
+                </div>
+
+            </div>
+
+            <div class="envelope-front"></div>
+
+            <div class="envelope-flap"></div>
+
+            <div class="wax-seal">
+                M&nbsp;&nbsp;♡&nbsp;&nbsp;D
+            </div>
+
+        </div>
+
+        <p class="tap-text">
+            Чакырууны ачуу үчүн басыңыз
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     MAIN SITE
+========================================= -->
+
+<main id="mainSite" class="main-site">
+
+
+<!-- MUSIC -->
+
+<audio id="weddingMusic" loop preload="auto">
+
+    <source
+        src="assets/music.mp3"
+        type="audio/mpeg">
+
+</audio>
+
+
+<button
+    id="musicButton"
+    class="music-button">
+
+    ♫
+
+</button>
+
+
+
+<!-- =========================================
+     HERO
+========================================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <p class="small-heading">
+            БИШКЕК ШААРЫНДА
+        </p>
+
+        <p class="invite-line">
+            СҮЙҮҮБҮЗДҮН ЭҢ КООЗ КҮНҮН
+        </p>
+
+        <h1>
+
+            Медина
+
+            <span>&</span>
+
+            Данил
+
+        </h1>
+
+        <div class="ornament">
+
+            <span></span>
+
+            ♡
+
+            <span></span>
+
+        </div>
+
+        <p class="date">
+            02 МАРТ 2027
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     INVITATION TEXT
+========================================= -->
+
+<section class="text-section">
+
+    <div class="section-inner">
+
+        <div class="tiny-flower">
+            ✿
+        </div>
+
+        <h2>
+
+            Урматтуу туугандар,<br>
+            достор жана жакындарыбыз!
+
+        </h2>
+
+        <p class="main-text">
+
+            Сиздерди биздин кубанычтуу күнүбүзгө
+            чакырабыз.
+
+        </p>
+
+        <p class="main-text">
+
+            Бул өзгөчө күндө биздин кубанычыбызды
+            тең бөлүшүп, биз менен бирге
+            болуңуздар.
+
+        </p>
+
+        <div class="ornament">
+
+            <span></span>
+
+            ❀
+
+            <span></span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     PHOTO
+========================================= -->
+
+<section class="photo-section">
+
+    <div class="photo-frame">
+
+        <img
+            src="assets/photo-1.jpg"
+            alt="Медина жана Данил">
+
+    </div>
+
+    <div class="photo-caption">
+
+        <span>
+            OUR
+        </span>
+
+        <strong>
+            LOVE STORY
+        </strong>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     DATE
+========================================= -->
+
+<section class="details-section">
+
+    <div class="detail-card">
+
+        <div class="detail-icon">
+            ♡
+        </div>
+
+        <p class="detail-label">
+            ТОЙ КҮНҮ
+        </p>
+
+        <h2>
+            02.03.2027
+        </h2>
+
+        <div class="line"></div>
+
+        <p class="time">
+            Саат 18:00
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     PHOTO 2
+========================================= -->
+
+<section class="large-photo">
+
+    <img
+        src="assets/photo-2.jpg"
+        alt="Медина жана Данил">
+
+    <div class="image-overlay"></div>
+
+    <div class="image-text">
+
+        <span>
+            TOGETHER
+        </span>
+
+        <strong>
+            FOREVER
+        </strong>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     RESTAURANT
+========================================= -->
+
+<section class="venue-section">
+
+    <div class="section-inner">
+
+        <p class="small-heading">
+            ТОЙДУН ОРДУ
+        </p>
+
+        <h2 class="venue-name">
+            «Arun» рестораны
+        </h2>
+
+        <div class="venue-flower">
+            ❀
+        </div>
+
+        <p class="address">
+
+            Baytik baatyr 76,<br>
+
+            Bishkek, Kyrgyzstan,<br>
+
+            720005
+
+        </p>
+
+        <a
+            class="map-button"
+
+            href="https://www.google.com/maps/search/?api=1&query=Arun%20Restaurant%2C%20Baytik%20Baatyr%2076%2C%20Bishkek%2C%20Kyrgyzstan%20720005"
+
+            target="_blank"
+
+            rel="noopener noreferrer">
+
+            📍 КАРТАДАН КӨРҮҮ
+
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     GALLERY
+========================================= -->
+
+<section class="gallery-section">
+
+    <div class="section-heading">
+
+        <span>
+            OUR MEMORIES
+        </span>
+
+        <h2>
+            Сүйүүбүздүн көз ирмемдери
+        </h2>
+
+    </div>
+
+
+    <div class="gallery">
+
+        <div class="gallery-item item-large">
+
+            <img
+                src="assets/photo-3.jpg"
+                alt="Wedding photo">
+
+        </div>
+
+
+        <div class="gallery-item">
+
+            <img
+                src="assets/photo-4.jpg"
+                alt="Wedding photo">
+
+        </div>
+
+
+        <div class="gallery-item">
+
+            <img
+                src="assets/photo-5.jpg"
+                alt="Wedding photo">
+
+        </div>
+
+
+        <div class="gallery-item item-wide">
+
+            <img
+                src="assets/photo-6.jpg"
+                alt="Wedding photo">
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     COUNTDOWN
+========================================= -->
+
+<section class="countdown-section">
+
+    <div class="countdown-inner">
+
+        <p class="small-heading">
+
+            БИЗДИН ӨЗГӨЧӨ КҮНГӨ ЧЕЙИН
+
+        </p>
+
+
+        <h2>
+
+            КҮТҮҮНҮН АР БИР МҮНӨТҮ
+            КЫМБАТ
+
+        </h2>
+
+
+        <div class="countdown">
+
+
+            <div class="count-box">
+
+                <strong id="days">
+                    0
+                </strong>
+
+                <span>
+                    КҮН
+                </span>
+
+            </div>
+
+
+            <div class="count-box">
+
+                <strong id="hours">
+                    0
+                </strong>
+
+                <span>
+                    СААТ
+                </span>
+
+            </div>
+
+
+            <div class="count-box">
+
+                <strong id="minutes">
+                    0
+                </strong>
+
+                <span>
+                    МҮНӨТ
+                </span>
+
+            </div>
+
+
+            <div class="count-box">
+
+                <strong id="seconds">
+                    0
+                </strong>
+
+                <span>
+                    СЕКУНД
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     FINAL
+========================================= -->
+
+<section class="final-photo">
+
+    <img
+        src="assets/photo-1.jpg"
+        alt="Медина жана Данил">
+
+    <div class="final-overlay"></div>
+
+
+    <div class="final-content">
+
+        <p>
+            СИЗДЕРДИ КҮТӨБҮЗ
+        </p>
+
+        <h2>
+            Медина & Данил
+        </h2>
+
+        <span>
+            02 · 03 · 2027
+        </span>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+    <div class="footer-flower">
+        ❀
+    </div>
+
+    <p>
+
+        Биздин кубанычыбызды
+        тең бөлүшкөнүңүздөр үчүн
+        рахмат!
+
+    </p>
+
+    <strong>
+        M & D
+    </strong>
+
+</footer>
+
+
+</main>
+
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const envelopeScreen =
+    document.getElementById("envelopeScreen");
+
+const envelope =
+    document.getElementById("openEnvelope");
+
+const mainSite =
+    document.getElementById("mainSite");
+
+const music =
+    document.getElementById("weddingMusic");
+
+const musicButton =
+    document.getElementById("musicButton");
+
+
+let opened = false;
+
+
+
+/* =========================================
+   OPEN ENVELOPE
+========================================= */
+
+envelope.addEventListener("click", function(){
+
+    if(opened) return;
+
+    opened = true;
+
+    envelopeScreen.classList.add("opening");
+
+
+    setTimeout(function(){
+
+        envelopeScreen.style.opacity = "0";
+
+    },700);
+
+
+    setTimeout(function(){
+
+        envelopeScreen.style.display = "none";
+
+        mainSite.classList.add("visible");
+
+        window.scrollTo(0,0);
+
+    },1200);
+
+
+    /*
+       Телефондо браузер музыка
+       autoplay кылууга уруксат бербейт.
+
+       Ошондуктан конвертти баскан
+       учурда музыканы баштайбыз.
+    */
+
+    setTimeout(function(){
+
+        music.volume = 0.65;
+
+        music.play()
+        .then(function(){
+
+            musicButton.innerHTML = "♫";
+
+        })
+        .catch(function(){
+
+            musicButton.innerHTML = "♪";
+
+        });
+
+    },1200);
+
+});
+
+
+
+/* =========================================
+   MUSIC BUTTON
+========================================= */
+
+musicButton.addEventListener("click",function(){
+
+    if(music.paused){
+
+        music.play()
+        .then(function(){
+
+            musicButton.innerHTML = "♫";
+
+        });
+
+    }else{
+
+        music.pause();
+
+        musicButton.innerHTML = "♪";
+
+    }
+
+});
+
+
+
+/* =========================================
+   COUNTDOWN
+========================================= */
+
+const weddingDate =
+    new Date("2027-03-02T18:00:00+06:00");
+
+
+function updateCountdown(){
+
+    const now =
+        new Date();
+
+
+    const difference =
+        weddingDate.getTime() -
+        now.getTime();
+
+
+    if(difference <= 0){
+
+        document.getElementById("days").textContent = "0";
+
+        document.getElementById("hours").textContent = "0";
+
+        document.getElementById("minutes").textContent = "0";
+
+        document.getElementById("seconds").textContent = "0";
+
+        return;
+
+    }
+
+
+    const totalSeconds =
+        Math.floor(difference / 1000);
+
+
+    const days =
+        Math.floor(
+            totalSeconds / 86400
+        );
+
+
+    const hours =
+        Math.floor(
+            (totalSeconds % 86400) / 3600
+        );
+
+
+    const minutes =
+        Math.floor(
+            (totalSeconds % 3600) / 60
+        );
+
+
+    const seconds =
+        totalSeconds % 60;
+
+
+    document.getElementById("days")
+        .textContent = days;
+
+
+    document.getElementById("hours")
+        .textContent =
+        String(hours).padStart(2,"0");
+
+
+    document.getElementById("minutes")
+        .textContent =
+        String(minutes).padStart(2,"0");
+
+
+    document.getElementById("seconds")
+        .textContent =
+        String(seconds).padStart(2,"0");
+
+}
+
+
+updateCountdown();
+
+setInterval(updateCountdown,1000);
+
+
+
+/* =========================================
+   SIMPLE IMAGE EFFECT
+========================================= */
+
+const images =
+    document.querySelectorAll("img");
+
+
+images.forEach(function(image){
+
+    image.addEventListener("load",function(){
+
+        image.style.opacity = "1";
+
+    });
+
+});
+
+
+});
+
+</script>
+
+</body>
+</html>
